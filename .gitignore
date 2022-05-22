@@ -396,3 +396,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# custom
+DoPrebuild.props
+Environment.props
+NuGet.Config
+publish.bat
+Dist/*
+BronzeRevamp.csproj
