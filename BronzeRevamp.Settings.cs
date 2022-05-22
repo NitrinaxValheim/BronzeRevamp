@@ -12,7 +12,7 @@
 
         public const string ModName = "BronzeRevamp";
 
-        public const string Version = "0.0.0.3";
+        public const string Version = "0.0.0.4";
 
         public const string Description = "Allows the user to customize the bronze recipe.";
 

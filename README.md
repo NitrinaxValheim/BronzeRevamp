@@ -9,6 +9,9 @@ Makes the recipe for Bronze customizable by the user.
 
 # Changelog
 
+* Version 0.0.0.4
+    * code optimation
+
 * Version 0.0.0.3
     * Configuration added to make all quantities customizable by the user.
     * Added notes for different alloys.

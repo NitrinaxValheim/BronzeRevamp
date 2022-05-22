@@ -56,13 +56,15 @@ namespace BronzeRevamp
         public readonly string CRLF = Environment.NewLine;
         public readonly string CRLF2 = Environment.NewLine + Environment.NewLine;
 
-        public readonly int baseQuantityCopper = 2;
-        public readonly int baseQuantityTin = 1;
-        public readonly int baseQuantityBronze = 1;
+        public readonly string nameOfCustomCategory = "Custom";
 
         public readonly string nameOfBronzeConfigEntry = "Bronze quantity";
         public readonly string nameOfCopperConfigEntry = "Copper quantity";
         public readonly string nameOfTinConfigEntry = "Tin quantity";
+
+        public readonly int defaultQuantityCopper = 2;
+        public readonly int defaultQuantityTin = 1;
+        public readonly int defaultQuantityBronze = 1;
 
         public static int usedQuantityCopper = 0;
         public static int usedQuantityTin = 0;
@@ -144,20 +146,20 @@ namespace BronzeRevamp
             // Add client config which can be edited in every local instance independently
 
             // check if one of the quantity is 0, sets the quantities to the original values
-            if (usedQuantityCopper == 0 || baseQuantityTin == 0 || baseQuantityBronze == 0) { ReadAndWriteConfigValues(); }
+            if (usedQuantityCopper == 0 || defaultQuantityTin == 0 || defaultQuantityBronze == 0) { ReadAndWriteConfigValues(); }
 
-            configQuantityBronze = Config.Bind("Client config", nameOfBronzeConfigEntry, usedQuantityBronze,
-                new ConfigDescription("Sets quantity of needed Bronze. (Original quantity is " + baseQuantityBronze + ")" + CRLF2 +
-                "If you want an alloy like in World of Warcraft, set Bronze to 2, Copper and Tin to 1 each (50 percent alloy)." + CRLF2 +
-                "If you want a more realistic alloy, set Bronze to 3, Copper to 2, and Tin to 1 (60 percent alloy)." + CRLF2 +
-                "If you want to reset the quantities to their original values, set Bronze to 1, Copper to 2 and Tin to 1." + CRLF2 +
+            configQuantityBronze = Config.Bind(nameOfCustomCategory, nameOfBronzeConfigEntry, usedQuantityBronze,
+                new ConfigDescription("Sets quantity of needed Bronze. (Default quantity is " + defaultQuantityBronze + ")" + CRLF2 +
+                "If you want an alloy like in World of Warcraft, set Bronze quantity to 2, Copper and Tin quantity to 1 each (50 percent alloy)." + CRLF2 +
+                "If you want a more realistic alloy, set Bronze quantity to 3, Copper quantity to 2, and Tin quantity to 1 (60 percent alloy)." + CRLF2 +
+                "If you want to reset the quantities to their original values, set Bronze quantity to 1, Copper quantity to 2 and Tin quantity to 1." + CRLF2 +
                 "If you change the quantities while you are in the game, you must log in again for the new quantities to be applied."));
 
-            configQuantityCopper = Config.Bind("Client config", nameOfCopperConfigEntry, usedQuantityCopper,
-                new ConfigDescription("Sets quantity of produced Copper. (Original quantity is " + baseQuantityCopper + ")"));
+            configQuantityCopper = Config.Bind(nameOfCustomCategory, nameOfCopperConfigEntry, usedQuantityCopper,
+                new ConfigDescription("Sets quantity of produced Copper. (Default quantity is " + defaultQuantityCopper + ")"));
             
-            configQuantityTin = Config.Bind("Client config", nameOfTinConfigEntry, usedQuantityTin,
-                new ConfigDescription("Sets quantity of needed Tin. (Original quantity is " + baseQuantityTin + ")"));
+            configQuantityTin = Config.Bind(nameOfCustomCategory, nameOfTinConfigEntry, usedQuantityTin,
+                new ConfigDescription("Sets quantity of needed Tin. (Default quantity is " + defaultQuantityTin + ")"));
 
             // You can subscribe to a global event when config got synced initially and on changes
             SynchronizationManager.OnConfigurationSynchronized += (obj, attr) =>
@@ -188,36 +190,36 @@ namespace BronzeRevamp
             if (usedQuantityCopper == 0)
             {
                 // set it to the base quantity
-                usedQuantityCopper = baseQuantityCopper;
+                usedQuantityCopper = defaultQuantityCopper;
             }
             else
             {
                 // else get quantity from config
-                usedQuantityCopper = (int)Config["Client config", nameOfCopperConfigEntry].BoxedValue;
+                usedQuantityCopper = (int)Config[nameOfCustomCategory, nameOfCopperConfigEntry].BoxedValue;
             }
 
             // if used quantity is 0
             if (usedQuantityTin == 0)
             {
                 // set it to the base quantity
-                usedQuantityTin = baseQuantityTin;
+                usedQuantityTin = defaultQuantityTin;
             }
             else
             {
                 // else get quantity from config
-                usedQuantityTin = (int)Config["Client config", nameOfTinConfigEntry].BoxedValue;
+                usedQuantityTin = (int)Config[nameOfCustomCategory, nameOfTinConfigEntry].BoxedValue;
             }
 
             // if used quantity is 0
             if (usedQuantityBronze == 0)
             {
                 // set it to the base quantity
-                usedQuantityBronze = baseQuantityBronze;
+                usedQuantityBronze = defaultQuantityBronze;
             }
             else
             {
                 // else get quantity from config
-                usedQuantityBronze = (int)Config["Client config", nameOfBronzeConfigEntry].BoxedValue;
+                usedQuantityBronze = (int)Config[nameOfCustomCategory, nameOfBronzeConfigEntry].BoxedValue;
             }
 
         }
