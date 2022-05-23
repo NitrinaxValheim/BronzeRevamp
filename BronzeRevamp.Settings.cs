@@ -28,7 +28,7 @@
 
         public const string Company = "Nitrinax";
 
-        public const string Copyright = "GNU GENERAL PUBLIC LICENSE Version 3";
+        public const string Copyright = "GNU GPL V3";
 
         public const string Trademark = "";
 
