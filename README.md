@@ -9,6 +9,14 @@ Makes the recipe for Bronze customizable by the user.
 
 # Changelog
 
+* Version 0.0.0.5
+    * Config category General added
+    * Config option ShowChangesAtStartup added
+    * changed names of some variables
+    * variables set to private
+    * config category custom renamed to Bronze
+    * description text corrected and changed
+
 * Version 0.0.0.4
     * code optimation
 

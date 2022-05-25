@@ -53,24 +53,29 @@ namespace BronzeRevamp
         private static Boolean showSubDetailedInfo = false;
         private static Boolean showSubErrorInfo = true;
 
-        public readonly string CRLF = Environment.NewLine;
-        public readonly string CRLF2 = Environment.NewLine + Environment.NewLine;
+        private readonly string CRLF = Environment.NewLine;
+        private readonly string CRLF2 = Environment.NewLine + Environment.NewLine;
 
-        public readonly string nameOfCustomCategory = "Custom";
+        // config strings
+        private readonly string nameOfGeneralCategory = "General";
+        private readonly string nameOfBronzeCategory = "Bronze";
 
-        public readonly string nameOfBronzeConfigEntry = "Bronze quantity";
-        public readonly string nameOfCopperConfigEntry = "Copper quantity";
-        public readonly string nameOfTinConfigEntry = "Tin quantity";
+        private readonly string nameOfShowChangesAtStartupConfigEntry = "show changes at startup";
+        private readonly string nameOfBronzeConfigEntry = "Bronze quantity";
+        private readonly string nameOfCopperConfigEntry = "Copper quantity";
+        private readonly string nameOfTinConfigEntry = "Tin quantity";
 
-        public readonly int defaultQuantityCopper = 2;
-        public readonly int defaultQuantityTin = 1;
-        public readonly int defaultQuantityBronze = 1;
+        private bool defaultShowChangesAtStartup = false;
+        private int defaultRequirementCopper = 2;
+        private int defaultRequirementTin = 1;
+        private int defaultQuantityBronze = 1;
 
-        public static int usedQuantityCopper = 0;
-        public static int usedQuantityTin = 0;
-        public static int usedQuantityBronze = 0;
+        private int usedRequirementCopper = 0;
+        private int usedRequirementTin = 0;
+        private int usedQuantityBronze = 0;
 
         // Configuration values
+        private ConfigEntry<bool> configShowChangesAtStartup;
         private ConfigEntry<int> configQuantityCopper;
         private ConfigEntry<int> configQuantityTin;
         private ConfigEntry<int> configQuantityBronze;
@@ -146,20 +151,23 @@ namespace BronzeRevamp
             // Add client config which can be edited in every local instance independently
 
             // check if one of the quantity is 0, sets the quantities to the original values
-            if (usedQuantityCopper == 0 || defaultQuantityTin == 0 || defaultQuantityBronze == 0) { ReadAndWriteConfigValues(); }
+            if (usedRequirementCopper == 0 || usedRequirementTin == 0 || usedQuantityBronze == 0) { ReadAndWriteConfigValues(); }
 
-            configQuantityBronze = Config.Bind(nameOfCustomCategory, nameOfBronzeConfigEntry, usedQuantityBronze,
-                new ConfigDescription("Sets quantity of needed Bronze. (Default quantity is " + defaultQuantityBronze + ")" + CRLF2 +
-                "If you want an alloy like in World of Warcraft, set Bronze quantity to 2, Copper and Tin quantity to 1 each (50 percent alloy)." + CRLF2 +
-                "If you want a more realistic alloy, set Bronze quantity to 3, Copper quantity to 2, and Tin quantity to 1 (60 percent alloy)." + CRLF2 +
-                "If you want to reset the quantities to their original values, set Bronze quantity to 1, Copper quantity to 2 and Tin quantity to 1." + CRLF2 +
+            configShowChangesAtStartup = Config.Bind(nameOfGeneralCategory, nameOfShowChangesAtStartupConfigEntry, defaultShowChangesAtStartup,
+                new ConfigDescription("If this option is activated, the changes to the recipe for the production of bronze are displayed in the BepinEx log."));
+
+            configQuantityBronze = Config.Bind(nameOfBronzeCategory, nameOfBronzeConfigEntry, usedQuantityBronze,
+                new ConfigDescription("Sets quantity of created Bronze. (Default quantity is " + defaultQuantityBronze + ")" + CRLF2 +
+                "If you want an alloy like in World of Warcraft, set Bronze quantity to 2, Copper and Tin requirement to 1 each (50 percent alloy)." + CRLF2 +
+                "If you want a more realistic alloy, set Bronze quantity to 3, Copper requirement to 2, and Tin requirement to 1 (60 percent alloy)." + CRLF2 +
+                "If you want to reset the quantities to their original values, set Bronze quantity to 1, Copper requirement to 2 and Tin requirement to 1." + CRLF2 +
                 "If you change the quantities while you are in the game, you must log in again for the new quantities to be applied."));
 
-            configQuantityCopper = Config.Bind(nameOfCustomCategory, nameOfCopperConfigEntry, usedQuantityCopper,
-                new ConfigDescription("Sets quantity of produced Copper. (Default quantity is " + defaultQuantityCopper + ")"));
+            configQuantityCopper = Config.Bind(nameOfBronzeCategory, nameOfCopperConfigEntry, usedRequirementCopper,
+                new ConfigDescription("Sets requirement of Copper. (Default requirement is " + defaultRequirementCopper + ")"));
             
-            configQuantityTin = Config.Bind(nameOfCustomCategory, nameOfTinConfigEntry, usedQuantityTin,
-                new ConfigDescription("Sets quantity of needed Tin. (Default quantity is " + defaultQuantityTin + ")"));
+            configQuantityTin = Config.Bind(nameOfBronzeCategory, nameOfTinConfigEntry, usedRequirementTin,
+                new ConfigDescription("Sets requirement of Tin. (Default quantity is " + defaultRequirementTin + ")"));
 
             // You can subscribe to a global event when config got synced initially and on changes
             SynchronizationManager.OnConfigurationSynchronized += (obj, attr) =>
@@ -187,27 +195,27 @@ namespace BronzeRevamp
         {
 
             // if used quantity is 0
-            if (usedQuantityCopper == 0)
+            if (usedRequirementCopper == 0)
             {
                 // set it to the base quantity
-                usedQuantityCopper = defaultQuantityCopper;
+                usedRequirementCopper = defaultRequirementCopper;
             }
             else
             {
                 // else get quantity from config
-                usedQuantityCopper = (int)Config[nameOfCustomCategory, nameOfCopperConfigEntry].BoxedValue;
+                usedRequirementCopper = (int)Config[nameOfBronzeCategory, nameOfCopperConfigEntry].BoxedValue;
             }
 
             // if used quantity is 0
-            if (usedQuantityTin == 0)
+            if (usedRequirementTin == 0)
             {
                 // set it to the base quantity
-                usedQuantityTin = defaultQuantityTin;
+                usedRequirementTin = defaultRequirementTin;
             }
             else
             {
                 // else get quantity from config
-                usedQuantityTin = (int)Config[nameOfCustomCategory, nameOfTinConfigEntry].BoxedValue;
+                usedRequirementTin = (int)Config[nameOfBronzeCategory, nameOfTinConfigEntry].BoxedValue;
             }
 
             // if used quantity is 0
@@ -219,7 +227,7 @@ namespace BronzeRevamp
             else
             {
                 // else get quantity from config
-                usedQuantityBronze = (int)Config[nameOfCustomCategory, nameOfBronzeConfigEntry].BoxedValue;
+                usedQuantityBronze = (int)Config[nameOfBronzeCategory, nameOfBronzeConfigEntry].BoxedValue;
             }
 
         }
@@ -296,6 +304,12 @@ namespace BronzeRevamp
             {
 
                 if (showEventInfo == true) { Logger.LogInfo("OnItemsRegistered"); }
+
+                // read new quantities
+                ReadAndWriteConfigValues();
+
+                // change recipe
+                ChangeBronzeRecipe(usedRequirementCopper, usedRequirementTin, usedQuantityBronze);
 
             }
             catch (Exception ex)
@@ -423,13 +437,6 @@ namespace BronzeRevamp
             try
             {
                 if (showEventInfo == true) { Logger.LogInfo("OnPrefabsRegistered"); }
-
-                // read new quantities
-                ReadAndWriteConfigValues();
-
-                // change recipe
-                ChangeBronzeRecipe(usedQuantityCopper, usedQuantityTin, usedQuantityBronze);
-
             }
             catch (Exception ex)
             {
@@ -526,8 +533,10 @@ namespace BronzeRevamp
         #endregion
 
         #region[ChangeBronzeRecipe]
-        private static void ChangeBronzeRecipe(int QuantityCopper, int QuantityTin, int QuantityBronze)
+        private void ChangeBronzeRecipe(int RequirementCopper, int RequirementTin, int QuantityBronze)
         {
+
+            bool showChangesAtStartup = (bool)Config[nameOfGeneralCategory, nameOfShowChangesAtStartupConfigEntry].BoxedValue;
 
             //[Info: BronzeRevamp.BronzeRevamp] Recipe_Bronze
             foreach (Recipe instanceMRecipe in ObjectDB.instance.m_recipes.Where(r => r.m_item?.name == "Bronze"))
@@ -544,10 +553,10 @@ namespace BronzeRevamp
                     {
                         
                         // set Quantity of needed copper
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = QuantityCopper },
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = RequirementCopper },
 
                         // set Quantity of needed tin
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = QuantityTin }
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = RequirementTin }
                         
                     };
 
@@ -557,8 +566,8 @@ namespace BronzeRevamp
                 else if (instanceMRecipe.name == "Recipe_Bronze5")
                 {
 
-                    QuantityCopper = QuantityCopper * 5;
-                    QuantityTin = QuantityTin * 5;
+                    RequirementCopper = RequirementCopper * 5;
+                    RequirementTin = RequirementTin * 5;
                     QuantityBronze = QuantityBronze * 5;
 
                     // set Quantity of produced bronze
@@ -569,21 +578,21 @@ namespace BronzeRevamp
                     {
 
                         // set Quantity of needed copper
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = QuantityCopper },
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = RequirementCopper },
 
                         // set Quantity of needed tin
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = QuantityTin }
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = RequirementTin }
                         
                     };
 
                 }
 
-                if (showSubDetailedInfo == true) {
+                if (showChangesAtStartup == true) {
 
-                    Jotunn.Logger.LogInfo($"Updated " + instanceMRecipe.m_item.name + " of " + instanceMRecipe.name + 
-                        ", set created Quantity to " + QuantityBronze +
-                        ", set Copper Quantity to " + QuantityCopper +
-                        ", set Tin Quantity to " + QuantityTin
+                    Jotunn.Logger.LogInfo($"changes " + instanceMRecipe.name + 
+                        ", set created quantity to " + QuantityBronze +
+                        ", set Copper requirement to " + RequirementCopper +
+                        ", set Tin requirement to " + RequirementTin
                         );
 
                 }
