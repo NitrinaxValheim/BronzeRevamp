@@ -1,13 +1,22 @@
-# BronzeRevamp
+# CustomizedBronze
 Makes the recipe for Bronze customizable by the user.
 
-* If you want an alloy like in World of Warcraft, set Bronze to 2, Copper and Tin to 1 each (50 percent alloy).
-* If you want a more realistic alloy, set Bronze to 3, Copper to 2, and Tin to 1 (60 percent alloy).
-* If you want to reset the quantities to their original values, set Bronze to 1, Copper to 2 and Tin to 1.
+* If you want the standard alloy of Valheim, set preset to 'Default'.
+* If you want an alloy like in World of Warcraft, set preset to 'WoWlike'.
+* If you want a more realistic alloy, set preset to 'Realistic'.
+* If you want an alloy with a mixing ratio defined by you, set the preset to 'Custom' and adjust the values below it to your liking.
 
 * If you change the quantities while you are in the game, you must log in again for the new quantities to be applied.
 
 # Changelog
+
+* Version 0.0.1.1
+    * added presets for composition of the alloy
+    * added new config options
+
+* Version 0.0.1.0
+    * code used from new template
+    * plugin renamed from BronzeRevamp to CustomizedBronze
 
 * Version 0.0.0.5
     * Config category General added

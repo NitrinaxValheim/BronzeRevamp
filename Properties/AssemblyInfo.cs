@@ -2,19 +2,19 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-using BronzeRevamp.Settings;
+using PluginSettings;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle(ModData.ModName)]
-[assembly: AssemblyDescription(ModData.Description)]
-[assembly: AssemblyConfiguration(ModData.Configuration)]
-[assembly: AssemblyCompany(ModData.Company)]
-[assembly: AssemblyProduct(ModData.ModName)]
-[assembly: AssemblyCopyright(ModData.Copyright)]
-[assembly: AssemblyTrademark(ModData.Trademark)]
-[assembly: AssemblyCulture(ModData.Culture)]
+[assembly: AssemblyTitle(PluginData.ModName)]
+[assembly: AssemblyDescription(PluginData.Description)]
+[assembly: AssemblyConfiguration(PluginData.Configuration)]
+[assembly: AssemblyCompany(PluginData.Company)]
+[assembly: AssemblyProduct(PluginData.ModName)]
+[assembly: AssemblyCopyright(PluginData.Copyright)]
+[assembly: AssemblyTrademark(PluginData.Trademark)]
+[assembly: AssemblyCulture(PluginData.Culture)]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -34,6 +34,6 @@ using BronzeRevamp.Settings;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(ModData.Version)]
-[assembly: AssemblyFileVersion(ModData.Version)]
-[assembly: NeutralResourcesLanguage(ModData.Language)]
+[assembly: AssemblyVersion(PluginData.Version)]
+[assembly: AssemblyFileVersion(PluginData.Version)]
+[assembly: NeutralResourcesLanguage(PluginData.Language)]
