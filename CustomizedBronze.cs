@@ -66,8 +66,8 @@ namespace CustomizedBronze
 
         // new line
 
-        private readonly static string CRLF = Environment.NewLine;
-        private readonly static string CRLF2 = Environment.NewLine + Environment.NewLine;
+        private readonly static string s_CRLF = Environment.NewLine;
+        private readonly static string s_CRLF2 = Environment.NewLine + Environment.NewLine;
 
         // config
 
@@ -83,46 +83,46 @@ namespace CustomizedBronze
 
         // presets
         // Copper, Tin, Bronze
-        private readonly static int[] DefaultAlloy = { 2, 1, 1 };
-        private readonly static int[] WoWlikeAlloy = { 1, 1, 2 };
-        private readonly static int[] RealisticAlloy = { 2, 1, 3 };
+        private static int[] DefaultAlloy = { 2, 1, 1 };
+        private static int[] WoWlikeAlloy = { 1, 1, 2 };
+        private static int[] RealisticAlloy = { 2, 1, 3 };
 
         // config strings
-        private readonly string Config_Category_Bronze = "Bronze";
+        private string ConfigCategoryBronze = "Bronze";
 
-        private readonly string Config_Entry_Bronze_Preset = "Bronze preset";
-        private readonly string Config_Entry_Bronze_PresetDescription =
-            "Alloy composition:" + CRLF +
-            "(If you change this, you will need to log in again for the changes to take effect.)" + CRLF2 +
+        private string ConfigEntryBronzePreset = "Bronze preset";
+        private string ConfigEntryBronzePresetDescription =
+            "Alloy composition:" + s_CRLF +
+            "(If you change this, you will need to log in again for the changes to take effect.)" + s_CRLF2 +
 
-            "Default = the standard alloy from Valheim" + CRLF +
-            "(2 Copper + 1 Tin = 1 Bronze)" + CRLF +
-            "[If you select this preset, your custom settings will be ignored.]" + CRLF2 +
+            "Default = the standard alloy from Valheim" + s_CRLF +
+            "(2 Copper + 1 Tin = 1 Bronze)" + s_CRLF +
+            "[If you select this preset, your custom settings will be ignored.]" + s_CRLF2 +
 
-            "WoWlike = an alloy like in World of Warcraft" + CRLF +
-            "(50 percent alloy, 1 Copper + 1 Tin = 2 Bronze)" + CRLF +
-            "[If you select this preset, your custom settings will be ignored.]" + CRLF2 +
+            "WoWlike = an alloy like in World of Warcraft" + s_CRLF +
+            "(50 percent alloy, 1 Copper + 1 Tin = 2 Bronze)" + s_CRLF +
+            "[If you select this preset, your custom settings will be ignored.]" + s_CRLF2 +
 
-            "Realistic = a more realistic alloy" + CRLF +
-            "(60 percent alloy, 2 Copper + 1 Tin = 3 Bronze)" + CRLF +
-            "[If you select this preset, your custom settings will be ignored.]" + CRLF2 +
+            "Realistic = a more realistic alloy" + s_CRLF +
+            "(60 percent alloy, 2 Copper + 1 Tin = 3 Bronze)" + s_CRLF +
+            "[If you select this preset, your custom settings will be ignored.]" + s_CRLF2 +
 
-            "Custom = a custom alloy with the mixing ratio you set " + CRLF +
+            "Custom = a custom alloy with the mixing ratio you set " + s_CRLF +
             "[If you select this , your custom settings will be used.]";
 
-        private readonly string Config_Category_Custom = "Custom";
+        private string ConfigCategoryCustom = "Custom";
 
-        private readonly string Config_Entry_Custom_Copper_Requirement = "Copper requirement";
-        private readonly string Config_Entry_Custom_Copper_Requirement_Description =
-            "Sets requirement of Copper." + CRLF +
+        private string ConfigEntryCustomCopperRequirement = "Copper requirement";
+        private string ConfigEntryCustomCopperRequirementDescription =
+            "Sets requirement of Copper." + s_CRLF +
             "(Default requirement is " + DefaultAlloy[0] + ")";
-        private readonly string Config_Entry_Custom_Tin_Requirement = "Tin requirement";
-        private readonly string Config_Entry_Custom_Tin_Requirement_Description =
-            "Sets requirement of Tin." + CRLF +
+        private string ConfigEntryCustomTinRequirement = "Tin requirement";
+        private string ConfigEntryCustomTinRequirementDescription =
+            "Sets requirement of Tin." + s_CRLF +
             "(Default requirement is " + DefaultAlloy[1] + ")";
-        private readonly string Config_Entry_Custom_Bronze_Quantity = "Bronze quantity";
-        private readonly string Config_Entry_Custom_Bronze_Quantity_Description =
-            "Sets quantity of created Bronze." + CRLF +
+        private string ConfigEntryCustomBronzeQuantity = "Bronze quantity";
+        private string ConfigEntryCustomBronzeQuantityDescription =
+            "Sets quantity of created Bronze." + s_CRLF +
             "(Default quantity is " + DefaultAlloy[2] + ")";
 
         // Configuration values
@@ -146,7 +146,7 @@ namespace CustomizedBronze
 
             CreateConfigValues();
 
-            bool modEnabled = (bool)Config[PluginData.Config_Category_General, PluginData.Config_Entry_Enabled].BoxedValue;
+            bool modEnabled = (bool)Config[PluginData.ConfigCategoryGeneral, PluginData.ConfigEntryEnabled].BoxedValue;
 
             if (modEnabled == true)
             {
@@ -222,15 +222,15 @@ namespace CustomizedBronze
 
             Config.SaveOnConfigSet = true;
 
-            configModEnabled = Config.Bind(PluginData.Config_Category_General, PluginData.Config_Entry_Enabled, PluginData.Config_Entry_Enabled_DefaultState,
-                new ConfigDescription(PluginData.Config_Entry_Enabled_Description, null, new ConfigurationManagerAttributes { Order = 0 })
+            configModEnabled = Config.Bind(PluginData.ConfigCategoryGeneral, PluginData.ConfigEntryEnabled, PluginData.ConfigEntryEnabledDefaultState,
+                new ConfigDescription(PluginData.ConfigEntryEnabledDescription, null, new ConfigurationManagerAttributes { Order = 0 })
             );
 
             configNexusID = Config.Bind(
-                PluginData.Config_Category_General,
-                PluginData.Config_Entry_NexusID,
-                PluginData.Config_Entry_NexusID_ID,
-                new ConfigDescription(PluginData.Config_Entry_NexusID_Description,
+                PluginData.ConfigCategoryGeneral,
+                PluginData.ConfigEntryNexusID,
+                PluginData.ConfigEntryNexusIDID,
+                new ConfigDescription(PluginData.ConfigEntryNexusIDDescription,
                     null,
                     new ConfigurationManagerAttributes
                     {
@@ -242,21 +242,21 @@ namespace CustomizedBronze
                 )
             );
 
-            configShowChangesAtStartup = Config.Bind(PluginData.Config_Category_Plugin, PluginData.Config_Entry_ShowChangesAtStartup, PluginData.Config_Entry_ShowChangesAtStartup_DefaultState,
-                new ConfigDescription(PluginData.Config_Entry_ShowChangesAtStartup_Description, null, new ConfigurationManagerAttributes { Order = 2 })
+            configShowChangesAtStartup = Config.Bind(PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup, PluginData.ConfigEntryShowChangesAtStartupDefaultState,
+                new ConfigDescription(PluginData.ConfigEntryShowChangesAtStartupDescription, null, new ConfigurationManagerAttributes { Order = 2 })
             );
 
-            configBronze = Config.Bind(Config_Category_Bronze, Config_Entry_Bronze_Preset, BronzePreset.Default,
-                new ConfigDescription(Config_Entry_Bronze_PresetDescription, null, new ConfigurationManagerAttributes { Order = 3 }));
+            configBronze = Config.Bind(ConfigCategoryBronze, ConfigEntryBronzePreset, BronzePreset.Default,
+                new ConfigDescription(ConfigEntryBronzePresetDescription, null, new ConfigurationManagerAttributes { Order = 3 }));
 
-            configBronzeRequirementCopper = Config.Bind(Config_Category_Custom, Config_Entry_Custom_Copper_Requirement, DefaultAlloy[0],
-                new ConfigDescription(Config_Entry_Custom_Copper_Requirement_Description, null, new ConfigurationManagerAttributes { Order = 4 }));
+            configBronzeRequirementCopper = Config.Bind(ConfigCategoryCustom, ConfigEntryCustomCopperRequirement, DefaultAlloy[0],
+                new ConfigDescription(ConfigEntryCustomCopperRequirementDescription, null, new ConfigurationManagerAttributes { Order = 4 }));
 
-            configBronzeRequirementTin = Config.Bind(Config_Category_Custom, Config_Entry_Custom_Tin_Requirement, DefaultAlloy[1],
-                new ConfigDescription(Config_Entry_Custom_Tin_Requirement_Description, null, new ConfigurationManagerAttributes { Order = 5 }));
+            configBronzeRequirementTin = Config.Bind(ConfigCategoryCustom, ConfigEntryCustomTinRequirement, DefaultAlloy[1],
+                new ConfigDescription(ConfigEntryCustomTinRequirementDescription, null, new ConfigurationManagerAttributes { Order = 5 }));
 
-            configBronzeQuantityBronze = Config.Bind(Config_Category_Custom, Config_Entry_Custom_Bronze_Quantity, DefaultAlloy[2],
-                new ConfigDescription(Config_Entry_Custom_Bronze_Quantity_Description, null, new ConfigurationManagerAttributes { Order = 6 }));
+            configBronzeQuantityBronze = Config.Bind(ConfigCategoryCustom, ConfigEntryCustomBronzeQuantity, DefaultAlloy[2],
+                new ConfigDescription(ConfigEntryCustomBronzeQuantityDescription, null, new ConfigurationManagerAttributes { Order = 6 }));
 
             // You can subscribe to a global event when config got synced initially and on changes
             SynchronizationManager.OnConfigurationSynchronized += (obj, attr) =>
@@ -284,10 +284,10 @@ namespace CustomizedBronze
         private void ReadConfigValues() {
 
             // get state of showChangesAtStartup
-            bool showChangesAtStartup = (bool)Config[PluginData.Config_Category_Plugin, PluginData.Config_Entry_ShowChangesAtStartup].BoxedValue;
+            bool showChangesAtStartup = (bool)Config[PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup].BoxedValue;
 
             // get BronzePreset config option
-            BronzePreset bronzePreset = (BronzePreset)Config[Config_Category_Bronze, Config_Entry_Bronze_Preset].BoxedValue;
+            BronzePreset bronzePreset = (BronzePreset)Config[ConfigCategoryBronze, ConfigEntryBronzePreset].BoxedValue;
 
             // check enum config option
             switch (bronzePreset)
@@ -324,9 +324,9 @@ namespace CustomizedBronze
                     
                     if (showChangesAtStartup == true) { Logger.LogInfo("Custom option selected"); }
 
-                    usedRequirementCopper = (int)Config[Config_Category_Custom, Config_Entry_Custom_Copper_Requirement].BoxedValue;
-                    usedRequirementTin = (int)Config[Config_Category_Custom, Config_Entry_Custom_Tin_Requirement].BoxedValue;
-                    usedQuantityBronze = (int)Config[Config_Category_Custom, Config_Entry_Custom_Bronze_Quantity].BoxedValue;
+                    usedRequirementCopper = (int)Config[ConfigCategoryCustom, ConfigEntryCustomCopperRequirement].BoxedValue;
+                    usedRequirementTin = (int)Config[ConfigCategoryCustom, ConfigEntryCustomTinRequirement].BoxedValue;
+                    usedQuantityBronze = (int)Config[ConfigCategoryCustom, ConfigEntryCustomBronzeQuantity].BoxedValue;
 
                 break;
                 
@@ -448,9 +448,6 @@ namespace CustomizedBronze
             try
             {
                 if (showEventInfo == true) { Logger.LogInfo("OnItemsRegisteredFejd"); }
-
-                // read config values for config menu
-                //ReadAndWriteConfigValues();
 
             }
             catch (Exception ex)
@@ -655,12 +652,12 @@ namespace CustomizedBronze
         {
 
             // init vars
-            int RequirementCopper = 0;
-            int RequirementTin = 0;
-            int QuantityBronze = 0;
+            int requirementCopper = 0;
+            int requirementTin = 0;
+            int quantityBronze = 0;
 
             // get state of showChangesAtStartup
-            bool showChangesAtStartup = (bool)Config[PluginData.Config_Category_Plugin, PluginData.Config_Entry_ShowChangesAtStartup].BoxedValue;
+            bool showChangesAtStartup = (bool)Config[PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup].BoxedValue;
 
             // Recipe_Bronze
             foreach (Recipe instanceMRecipe in ObjectDB.instance.m_recipes.Where(r => r.m_item?.name == "Bronze"))
@@ -669,22 +666,22 @@ namespace CustomizedBronze
                 if (instanceMRecipe.name == "Recipe_Bronze")
                 {
 
-                    RequirementCopper = usedRequirementCopper;
-                    RequirementTin = usedRequirementTin;
-                    QuantityBronze = usedQuantityBronze;
+                    requirementCopper = usedRequirementCopper;
+                    requirementTin = usedRequirementTin;
+                    quantityBronze = usedQuantityBronze;
 
                     // set Quantity of produced bronze
-                    instanceMRecipe.m_amount = QuantityBronze;
+                    instanceMRecipe.m_amount = quantityBronze;
 
                     // requirements
                     instanceMRecipe.m_resources = new Piece.Requirement[]
                     {
 
                         // set Quantity of needed copper
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = RequirementCopper },
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = requirementCopper },
 
                         // set Quantity of needed tin
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = RequirementTin }
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = requirementTin }
 
                     };
 
@@ -694,22 +691,22 @@ namespace CustomizedBronze
                 else if (instanceMRecipe.name == "Recipe_Bronze5")
                 {
 
-                    RequirementCopper = usedRequirementCopper * 5;
-                    RequirementTin = usedRequirementTin * 5;
-                    QuantityBronze = usedQuantityBronze * 5;
+                    requirementCopper = usedRequirementCopper * 5;
+                    requirementTin = usedRequirementTin * 5;
+                    quantityBronze = usedQuantityBronze * 5;
 
                     // set Quantity of produced bronze
-                    instanceMRecipe.m_amount = QuantityBronze;
+                    instanceMRecipe.m_amount = quantityBronze;
 
                     // requirements
                     instanceMRecipe.m_resources = new Piece.Requirement[]
                     {
 
                         // set Quantity of needed copper
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = RequirementCopper },
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Copper"), m_amount = requirementCopper },
 
                         // set Quantity of needed tin
-                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = RequirementTin }
+                        new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = requirementTin }
 
                     };
 
@@ -719,9 +716,9 @@ namespace CustomizedBronze
                 {
 
                     Jotunn.Logger.LogInfo($"changes " + instanceMRecipe.name +
-                        ", set Copper requirement to " + RequirementCopper +
-                        ", set Tin requirement to " + RequirementTin +
-                        ", set created quantity of Bronze to " + QuantityBronze
+                        ", set Copper requirement to " + requirementCopper +
+                        ", set Tin requirement to " + requirementTin +
+                        ", set created quantity of Bronze to " + quantityBronze
                         );
 
                 }

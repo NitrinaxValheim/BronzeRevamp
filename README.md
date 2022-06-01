@@ -10,6 +10,11 @@ Makes the recipe for Bronze customizable by the user.
 
 # Changelog
 
+* Version 0.0.1.2
+    * internal version
+        * changed readonly state of some vars
+        * naming of variables changed to be more in line with naming conventions
+
 * Version 0.0.1.1
     * added presets for composition of the alloy
     * added new config options
