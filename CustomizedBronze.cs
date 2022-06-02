@@ -210,9 +210,9 @@ namespace CustomizedBronze
         #endregion
 
         #region[Update]
-        /*        private void Update()
-                {
-                }*/
+        private void Update()
+        {
+        }
         #endregion
 
         #region[CreateConfigValues]
@@ -261,7 +261,7 @@ namespace CustomizedBronze
             // You can subscribe to a global event when config got synced initially and on changes
             SynchronizationManager.OnConfigurationSynchronized += (obj, attr) =>
             {
-                
+
                 if (attr.InitialSynchronization)
                 {
 
@@ -281,7 +281,8 @@ namespace CustomizedBronze
         #endregion
 
         #region[ReadConfigValues]
-        private void ReadConfigValues() {
+        private void ReadConfigValues()
+        {
 
             // get state of showChangesAtStartup
             bool showChangesAtStartup = (bool)Config[PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup].BoxedValue;
@@ -300,7 +301,7 @@ namespace CustomizedBronze
                     usedRequirementTin = DefaultAlloy[1];
                     usedQuantityBronze = DefaultAlloy[2];
 
-                break;
+                    break;
 
                 case BronzePreset.WoWlike:
 
@@ -309,7 +310,7 @@ namespace CustomizedBronze
                     usedRequirementTin = WoWlikeAlloy[1];
                     usedQuantityBronze = WoWlikeAlloy[2];
 
-                break;
+                    break;
 
                 case BronzePreset.Realistic:
 
@@ -318,23 +319,23 @@ namespace CustomizedBronze
                     usedRequirementTin = RealisticAlloy[1];
                     usedQuantityBronze = RealisticAlloy[2];
 
-                break;
+                    break;
 
                 case BronzePreset.Custom:
-                    
+
                     if (showChangesAtStartup == true) { Logger.LogInfo("Custom option selected"); }
 
                     usedRequirementCopper = (int)Config[ConfigCategoryCustom, ConfigEntryCustomCopperRequirement].BoxedValue;
                     usedRequirementTin = (int)Config[ConfigCategoryCustom, ConfigEntryCustomTinRequirement].BoxedValue;
                     usedQuantityBronze = (int)Config[ConfigCategoryCustom, ConfigEntryCustomBronzeQuantity].BoxedValue;
 
-                break;
-                
+                    break;
+
                 default:
 
                     if (showChangesAtStartup == true) { Logger.LogInfo("unknown option selected"); }
 
-                break;
+                    break;
 
             }
 
