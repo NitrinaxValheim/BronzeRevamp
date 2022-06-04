@@ -10,6 +10,9 @@ Makes the recipe for Bronze customizable by the user.
 
 # Changelog
 
+* Version 0.0.1.3
+    * added bool isModded
+
 * Version 0.0.1.2
     * internal version
         * changed readonly state of some vars

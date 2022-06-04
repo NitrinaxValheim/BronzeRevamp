@@ -43,6 +43,9 @@ namespace CustomizedBronze
     internal class CustomizedBronze : BaseUnityPlugin
     {
 
+        // public values
+
+        public static bool isModded = true;
 
         // private values
 
