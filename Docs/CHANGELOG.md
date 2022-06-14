@@ -1,5 +1,9 @@
 # Changelog
 
+* Version 0.0.1.5
+    * The code has been optimized so that debug messages are not included in the release code.
+    * Added file PluginDependencies.cs
+
 * Version 0.0.1.4
     * added switch for 'active' message
     * added switch for 'disabled' message

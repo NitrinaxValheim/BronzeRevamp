@@ -49,28 +49,6 @@ namespace CustomizedBronze
         public static bool isModded = true;
 
         // private values
-#if (DEBUG)
-        private const Boolean showDebugInfo = true;
-        private const Boolean showPluginActiveInfo = true;
-        private const Boolean showPluginDetailedInfo = true;
-        private const Boolean showEventInfo = true;
-        private const Boolean showEventDetailedInfo = true;
-        private const Boolean showSubInfo = true;
-        private const Boolean showSubDetailedInfo = true;
-#else
-        private const Boolean showDebugInfo = false;
-        private const Boolean showPluginActiveInfo = false;
-        private const Boolean showPluginDetailedInfo = false;
-        private const Boolean showEventInfo = false;
-        private const Boolean showEventDetailedInfo = false;
-        private const Boolean showSubInfo = false;
-        private const Boolean showSubDetailedInfo = false;
-#endif
-
-        private const Boolean showPluginDisabledInfo = true;
-        private const Boolean showPluginErrorInfo = true;
-        private const Boolean showEventErrorInfo = true;
-        private const Boolean showSubErrorInfo = true;
 
         // new line
         private readonly static string s_CRLF = Environment.NewLine;
@@ -159,8 +137,9 @@ namespace CustomizedBronze
 
                 // ##### plugin startup logic #####
 
-                if (showPluginDetailedInfo == true) { Jotunn.Logger.LogInfo("Loading start"); }
-
+#if (DEBUG)
+                Jotunn.Logger.LogInfo("Loading start");
+#endif
                 // Event System
 
                 // CreatureManager
@@ -199,16 +178,21 @@ namespace CustomizedBronze
 
                 // ##### info functions #####
 
-                if (showPluginDetailedInfo == true) { Jotunn.Logger.LogInfo("Loading done"); }
+#if (DEBUG)
+                Jotunn.Logger.LogInfo("Loading done");
+#endif
 
                 // Game data
-                if (showPluginActiveInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active."); }
+#if (DEBUG)
+                Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active.");
+#endif
+
 
             }
             else
             {
 
-                if (showPluginDisabledInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config."); }
+                Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config.");
 
             }
 
@@ -345,13 +329,19 @@ namespace CustomizedBronze
 
             }
 
-            if (showDebugInfo == true)
+/*            if (showDebugInfo == true)
             {
                 Logger.LogInfo(
                         "usedRequirementCopper = " + usedRequirementCopper +
                         ", usedRequirementTin = " + usedRequirementTin +
                         ", usedQuantityBronze = " + usedQuantityBronze);
-            }
+            }*/
+#if (DEBUG)
+            Logger.LogInfo(
+                        "usedRequirementCopper = " + usedRequirementCopper +
+                        ", usedRequirementTin = " + usedRequirementTin +
+                        ", usedQuantityBronze = " + usedQuantityBronze);
+#endif
 
         }
         #endregion
@@ -365,11 +355,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnCreaturesRegistered"); }
+#if (DEBUG)
+                Logger.LogInfo("OnCreaturesRegistered");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnCreaturesRegistered : {ex.Message}"); }
+                Logger.LogError($"Error OnCreaturesRegistered : {ex.Message}");
             }
             finally
             {
@@ -384,11 +376,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnVanillaCreaturesAvailable"); }
+#if (DEBUG)
+                Logger.LogInfo("OnVanillaCreaturesAvailable");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnVanillaCreaturesAvailable : {ex.Message}"); }
+                Logger.LogError($"Error OnVanillaCreaturesAvailable : {ex.Message}");
             }
             finally
             {
@@ -405,11 +399,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnCustomGUIAvailable"); }
+#if (DEBUG)
+                Logger.LogInfo("OnCustomGUIAvailable");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnCustomGUIAvailable : {ex.Message}"); }
+                Logger.LogError($"Error OnCustomGUIAvailable : {ex.Message}");
             }
             finally
             {
@@ -427,10 +423,11 @@ namespace CustomizedBronze
             try
             {
 
-                if (showEventInfo == true) { Logger.LogInfo("OnItemsRegistered"); }
+#if (DEBUG)
+                Logger.LogInfo("OnItemsRegistered");
+#endif
 
                 // read new quantities
-                //ReadAndWriteConfigValues();
                 ReadConfigValues();
 
                 // change recipe
@@ -439,7 +436,7 @@ namespace CustomizedBronze
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnItemsRegistered : {ex.Message}"); }
+                Logger.LogError($"Error OnItemsRegistered : {ex.Message}");
             }
             finally
             {
@@ -454,12 +451,14 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnItemsRegisteredFejd"); }
+#if (DEBUG)
+                Logger.LogInfo("OnItemsRegisteredFejd");
+#endif
 
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnItemsRegisteredFejd : {ex.Message}"); }
+                Logger.LogError($"Error OnItemsRegisteredFejd : {ex.Message}");
             }
             finally
             {
@@ -476,11 +475,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnLocalizationAdded"); }
+#if (DEBUG)
+                Logger.LogInfo("OnLocalizationAdded");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnLocalizationAdded : {ex.Message}"); }
+                Logger.LogError($"Error OnLocalizationAdded : {ex.Message}");
             }
             finally
             {
@@ -497,11 +498,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnVanillaMapAvailable"); }
+#if (DEBUG)
+                Logger.LogInfo("OnVanillaMapAvailable");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnVanillaMapAvailable : {ex.Message}"); }
+                Logger.LogError($"Error OnVanillaMapAvailable : {ex.Message}");
             }
             finally
             {
@@ -516,11 +519,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnVanillaMapDataLoaded"); }
+#if (DEBUG)
+                Logger.LogInfo("OnVanillaMapDataLoaded");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnVanillaMapDataLoaded : {ex.Message}"); }
+                Logger.LogError($"Error OnVanillaMapDataLoaded : {ex.Message}");
             }
             finally
             {
@@ -537,11 +542,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnPiecesRegistered"); }
+#if (DEBUG)
+                Logger.LogInfo("OnPiecesRegistered");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnPiecesRegistered : {ex.Message}"); }
+                Logger.LogError($"Error OnPiecesRegistered : {ex.Message}");
             }
             finally
             {
@@ -558,11 +565,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnPrefabsRegistered"); }
+#if (DEBUG)
+                Logger.LogInfo("OnPrefabsRegistered");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnPrefabsRegistered : {ex.Message}"); }
+                Logger.LogError($"Error OnPrefabsRegistered : {ex.Message}");
             }
             finally
             {
@@ -577,11 +586,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnVanillaPrefabsAvailable"); }
+#if (DEBUG)
+                Logger.LogInfo("OnVanillaPrefabsAvailable");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnVanillaPrefabsAvailable : {ex.Message}"); }
+                Logger.LogError($"Error OnVanillaPrefabsAvailable : {ex.Message}");
             }
             finally
             {
@@ -598,11 +609,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnAdminStatusChanged"); }
+#if (DEBUG)
+                Logger.LogInfo("OnAdminStatusChanged");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnAdminStatusChanged : {ex.Message}"); }
+                Logger.LogError($"Error OnAdminStatusChanged : {ex.Message}");
             }
             finally
             {
@@ -617,11 +630,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnConfigurationSynchronized"); }
+#if (DEBUG)
+                Logger.LogInfo("OnConfigurationSynchronized");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnConfigurationSynchronized : {ex.Message}"); }
+                Logger.LogError($"Error OnConfigurationSynchronized : {ex.Message}");
             }
             finally
             {
@@ -638,11 +653,13 @@ namespace CustomizedBronze
 
             try
             {
-                if (showEventInfo == true) { Logger.LogInfo("OnVanillaLocationsAvailable"); }
+#if (DEBUG)
+                Logger.LogInfo("OnVanillaLocationsAvailable");
+#endif
             }
             catch (Exception ex)
             {
-                if (showEventErrorInfo == true) { Logger.LogError($"Error OnVanillaLocationsAvailable : {ex.Message}"); }
+                Logger.LogError($"Error OnVanillaLocationsAvailable : {ex.Message}");
             }
             finally
             {

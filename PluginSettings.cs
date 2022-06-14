@@ -24,7 +24,7 @@
         /// <summary>
         ///     The current version of the mod.
         /// </summary>
-        public const string Version = "0.0.1.4";
+        public const string Version = "0.0.1.5";
 
         /// <summary>
         ///     The BepInEx plugin Mod GUID being used.
