@@ -1,6 +1,6 @@
 {
   "name": "CustomizedBronze",
-  "version_number": "0.0.13",
+  "version_number": "0.0.14",
   "website_url": "https://github.com/NitrinaxValheim/CustomizedBronze",
   "description": "Allows the user to customize the bronze recipe.",
   "dependencies": [

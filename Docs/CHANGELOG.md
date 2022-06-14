@@ -1,5 +1,13 @@
 # Changelog
 
+* Version 0.0.1.4
+    * added switch for 'active' message
+    * added switch for 'disabled' message
+    * splitted switch 'showPluginInfo' in 'showPluginActiveInfo' and 'showPluginDisabledInfo'
+    * regroup all switches for debug and release path
+    * updated script for release to reflect the config (debug or release)
+    * updated postbuild event in visual studio to reflect the config
+
 * Version 0.0.1.3
     * added bool isModded
     * split README in single documents for README, INSTALLATION and CHANGELOG

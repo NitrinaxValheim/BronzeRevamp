@@ -45,30 +45,34 @@ namespace CustomizedBronze
 
         // public values
 
+        // info for valheim/bepinex that the game is modded
         public static bool isModded = true;
 
         // private values
-
-        // plugin
-        private const Boolean showPluginInfo = true;
+#if (DEBUG)
+        private const Boolean showDebugInfo = true;
+        private const Boolean showPluginActiveInfo = true;
+        private const Boolean showPluginDetailedInfo = true;
+        private const Boolean showEventInfo = true;
+        private const Boolean showEventDetailedInfo = true;
+        private const Boolean showSubInfo = true;
+        private const Boolean showSubDetailedInfo = true;
+#else
+        private const Boolean showDebugInfo = false;
+        private const Boolean showPluginActiveInfo = false;
         private const Boolean showPluginDetailedInfo = false;
-        private const Boolean showPluginErrorInfo = true;
-
-        // event
         private const Boolean showEventInfo = false;
         private const Boolean showEventDetailedInfo = false;
-        private const Boolean showEventErrorInfo = true;
-
-        // sub
         private const Boolean showSubInfo = false;
         private const Boolean showSubDetailedInfo = false;
+#endif
+
+        private const Boolean showPluginDisabledInfo = true;
+        private const Boolean showPluginErrorInfo = true;
+        private const Boolean showEventErrorInfo = true;
         private const Boolean showSubErrorInfo = true;
 
-        // debug
-        private const Boolean showDebugInfo = true;
-
         // new line
-
         private readonly static string s_CRLF = Environment.NewLine;
         private readonly static string s_CRLF2 = Environment.NewLine + Environment.NewLine;
 
@@ -85,7 +89,6 @@ namespace CustomizedBronze
         };
 
         // presets
-        // Copper, Tin, Bronze
         private static int[] DefaultAlloy = { 2, 1, 1 };
         private static int[] WoWlikeAlloy = { 1, 1, 2 };
         private static int[] RealisticAlloy = { 2, 1, 3 };
@@ -199,13 +202,13 @@ namespace CustomizedBronze
                 if (showPluginDetailedInfo == true) { Jotunn.Logger.LogInfo("Loading done"); }
 
                 // Game data
-                if (showPluginInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active."); }
+                if (showPluginActiveInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active."); }
 
             }
             else
             {
 
-                if (showPluginInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config."); }
+                if (showPluginDisabledInfo == true) { Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config."); }
 
             }
 

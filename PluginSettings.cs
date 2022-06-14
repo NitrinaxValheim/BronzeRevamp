@@ -24,7 +24,7 @@
         /// <summary>
         ///     The current version of the mod.
         /// </summary>
-        public const string Version = "0.0.1.3";
+        public const string Version = "0.0.1.4";
 
         /// <summary>
         ///     The BepInEx plugin Mod GUID being used.
@@ -40,13 +40,9 @@
         ///     Set the deploy channel.
         /// </summary>
 #if (DEBUG)
-
         public const string Configuration = "Debug";
-
 #else
-
         public const string Configuration = "Release";
-
 #endif
 
         /// <summary>
