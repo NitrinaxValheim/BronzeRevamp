@@ -23,13 +23,16 @@ using Jotunn.GUI;
 using Logger = Jotunn.Logger;
 
 ////  functions
-using PluginSettings;
+
+using Common;
+
+using Plugin;
 
 namespace CustomizedBronze
 {
 
     // setup plugin data
-    [BepInPlugin(PluginData.Guid, PluginData.ModName, PluginData.Version)]
+    [BepInPlugin(Data.Guid, Data.ModName, Data.Version)]
 
     // check for running valheim process
     [BepInProcess("valheim.exe")]
@@ -128,71 +131,77 @@ namespace CustomizedBronze
         private void Awake()
         {
 
-            CreateConfigValues();
 
-            bool modEnabled = (bool)Config[PluginData.ConfigCategoryGeneral, PluginData.ConfigEntryEnabled].BoxedValue;
-
-            if (modEnabled == true)
+            if (DependencyOperations.CheckForDependencyErrors(PluginInfo.PLUGIN_GUID) == false)
             {
 
-                // ##### plugin startup logic #####
+                CreateConfigValues();
 
-#if (DEBUG)
-                Jotunn.Logger.LogInfo("Loading start");
-#endif
-                // Event System
+                bool modEnabled = (bool)Config[Data.ConfigCategoryGeneral, Data.ConfigEntryEnabled].BoxedValue;
 
-                // CreatureManager
-                CreatureManager.OnCreaturesRegistered += OnCreaturesRegistered;
-                CreatureManager.OnVanillaCreaturesAvailable += OnVanillaCreaturesAvailable;
+                if (modEnabled == true)
+                {
 
-                // GUIManager
-                //GUIManager.OnPixelFixCreated - outdated
-                GUIManager.OnCustomGUIAvailable += OnCustomGUIAvailable;
+                    // ##### plugin startup logic #####
 
-                // ItemManager
-                ItemManager.OnItemsRegistered += OnItemsRegistered;
-                ItemManager.OnItemsRegisteredFejd += OnItemsRegisteredFejd;
-                //ItemManager.OnVanillaItemsAvailable - outdated
+    #if (DEBUG)
+                    Jotunn.Logger.LogInfo("Loading start");
+    #endif
+                    // Event System
 
-                // LocalizationManager
-                LocalizationManager.OnLocalizationAdded += OnLocalizationAdded;
+                    // CreatureManager
+                    CreatureManager.OnCreaturesRegistered += OnCreaturesRegistered;
+                    CreatureManager.OnVanillaCreaturesAvailable += OnVanillaCreaturesAvailable;
 
-                // MinimapManager
-                MinimapManager.OnVanillaMapAvailable += OnVanillaMapAvailable;
-                MinimapManager.OnVanillaMapDataLoaded += OnVanillaMapDataLoaded;
+                    // GUIManager
+                    //GUIManager.OnPixelFixCreated - outdated
+                    GUIManager.OnCustomGUIAvailable += OnCustomGUIAvailable;
 
-                // PieceManager
-                PieceManager.OnPiecesRegistered += OnPiecesRegistered;
+                    // ItemManager
+                    ItemManager.OnItemsRegistered += OnItemsRegistered;
+                    ItemManager.OnItemsRegisteredFejd += OnItemsRegisteredFejd;
+                    //ItemManager.OnVanillaItemsAvailable - outdated
 
-                // PrefabManager
-                PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
-                PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
+                    // LocalizationManager
+                    LocalizationManager.OnLocalizationAdded += OnLocalizationAdded;
 
-                // SynchronizationManager
-                SynchronizationManager.OnAdminStatusChanged += OnAdminStatusChanged;
-                //SynchronizationManager.OnConfigurationSynchronized += OnConfigurationSynchronized; - error
+                    // MinimapManager
+                    MinimapManager.OnVanillaMapAvailable += OnVanillaMapAvailable;
+                    MinimapManager.OnVanillaMapDataLoaded += OnVanillaMapDataLoaded;
 
-                // ZoneManager
-                ZoneManager.OnVanillaLocationsAvailable += OnVanillaLocationsAvailable;
+                    // PieceManager
+                    PieceManager.OnPiecesRegistered += OnPiecesRegistered;
 
-                // ##### info functions #####
+                    // PrefabManager
+                    PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
+                    PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
-#if (DEBUG)
-                Jotunn.Logger.LogInfo("Loading done");
-#endif
+                    // SynchronizationManager
+                    SynchronizationManager.OnAdminStatusChanged += OnAdminStatusChanged;
+                    //SynchronizationManager.OnConfigurationSynchronized += OnConfigurationSynchronized; - error
 
-                // Game data
-#if (DEBUG)
-                Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active.");
-#endif
+                    // ZoneManager
+                    ZoneManager.OnVanillaLocationsAvailable += OnVanillaLocationsAvailable;
+
+                    // ##### info functions #####
+
+    #if (DEBUG)
+                    Jotunn.Logger.LogInfo("Loading done");
+    #endif
+
+                    // Game data
+    #if (DEBUG)
+                    Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active.");
+    #endif
 
 
-            }
-            else
-            {
+                }
+                else
+                {
 
-                Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config.");
+                    Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is disabled by config.");
+
+                }
 
             }
 
@@ -212,15 +221,15 @@ namespace CustomizedBronze
 
             Config.SaveOnConfigSet = true;
 
-            configModEnabled = Config.Bind(PluginData.ConfigCategoryGeneral, PluginData.ConfigEntryEnabled, PluginData.ConfigEntryEnabledDefaultState,
-                new ConfigDescription(PluginData.ConfigEntryEnabledDescription, null, new ConfigurationManagerAttributes { Order = 0 })
+            configModEnabled = Config.Bind(Data.ConfigCategoryGeneral, Data.ConfigEntryEnabled, Data.ConfigEntryEnabledDefaultState,
+                new ConfigDescription(Data.ConfigEntryEnabledDescription, null, new ConfigurationManagerAttributes { Order = 0 })
             );
 
             configNexusID = Config.Bind(
-                PluginData.ConfigCategoryGeneral,
-                PluginData.ConfigEntryNexusID,
-                PluginData.ConfigEntryNexusIDID,
-                new ConfigDescription(PluginData.ConfigEntryNexusIDDescription,
+                Data.ConfigCategoryGeneral,
+                Data.ConfigEntryNexusID,
+                Data.ConfigEntryNexusIDID,
+                new ConfigDescription(Data.ConfigEntryNexusIDDescription,
                     null,
                     new ConfigurationManagerAttributes
                     {
@@ -232,8 +241,8 @@ namespace CustomizedBronze
                 )
             );
 
-            configShowChangesAtStartup = Config.Bind(PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup, PluginData.ConfigEntryShowChangesAtStartupDefaultState,
-                new ConfigDescription(PluginData.ConfigEntryShowChangesAtStartupDescription, null, new ConfigurationManagerAttributes { Order = 2 })
+            configShowChangesAtStartup = Config.Bind(Data.ConfigCategoryPlugin, Data.ConfigEntryShowChangesAtStartup, Data.ConfigEntryShowChangesAtStartupDefaultState,
+                new ConfigDescription(Data.ConfigEntryShowChangesAtStartupDescription, null, new ConfigurationManagerAttributes { Order = 2 })
             );
 
             configBronze = Config.Bind(ConfigCategoryBronze, ConfigEntryBronzePreset, BronzePreset.Default,
@@ -275,7 +284,7 @@ namespace CustomizedBronze
         {
 
             // get state of showChangesAtStartup
-            bool showChangesAtStartup = (bool)Config[PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup].BoxedValue;
+            bool showChangesAtStartup = (bool)Config[Data.ConfigCategoryPlugin, Data.ConfigEntryShowChangesAtStartup].BoxedValue;
 
             // get BronzePreset config option
             BronzePreset bronzePreset = (BronzePreset)Config[ConfigCategoryBronze, ConfigEntryBronzePreset].BoxedValue;
@@ -681,7 +690,7 @@ namespace CustomizedBronze
             int quantityBronze = 0;
 
             // get state of showChangesAtStartup
-            bool showChangesAtStartup = (bool)Config[PluginData.ConfigCategoryPlugin, PluginData.ConfigEntryShowChangesAtStartup].BoxedValue;
+            bool showChangesAtStartup = (bool)Config[Data.ConfigCategoryPlugin, Data.ConfigEntryShowChangesAtStartup].BoxedValue;
 
             // Recipe_Bronze
             foreach (Recipe instanceMRecipe in ObjectDB.instance.m_recipes.Where(r => r.m_item?.name == "Bronze"))

@@ -1,5 +1,11 @@
 # Changelog
 
+* Version 0.0.1.6
+    * updated for Valheim 0.209.8 (Unity 2020.3.33f1)
+    * updated for Jotunn 2.6.10
+    * renamed class PluginDependencies to Dependencies and moved it into folder Plugin
+    * renamed class PluginSettings to Data and moved it into folder Plugin
+
 * Version 0.0.1.5
     * The code has been optimized so that debug messages are not included in the release code.
     * Added file PluginDependencies.cs

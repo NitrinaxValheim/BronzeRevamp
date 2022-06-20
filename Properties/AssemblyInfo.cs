@@ -1,20 +1,19 @@
 ﻿using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
-using PluginSettings;
+using Plugin;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle(PluginData.ModName)]
-[assembly: AssemblyDescription(PluginData.Description)]
-[assembly: AssemblyConfiguration(PluginData.Configuration)]
-[assembly: AssemblyCompany(PluginData.Company)]
-[assembly: AssemblyProduct(PluginData.ModName)]
-[assembly: AssemblyCopyright(PluginData.Copyright)]
-[assembly: AssemblyTrademark(PluginData.Trademark)]
-[assembly: AssemblyCulture(PluginData.Culture)]
+[assembly: AssemblyTitle(Data.ModName)]
+[assembly: AssemblyDescription(Data.Description)]
+[assembly: AssemblyConfiguration(Data.Configuration)]
+[assembly: AssemblyCompany(Data.Company)]
+[assembly: AssemblyProduct(Data.ModName)]
+[assembly: AssemblyCopyright(Data.Copyright)]
+[assembly: AssemblyTrademark(Data.Trademark)]
+[assembly: AssemblyCulture(Data.Culture)]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -34,6 +33,6 @@ using PluginSettings;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(PluginData.Version)]
-[assembly: AssemblyFileVersion(PluginData.Version)]
-[assembly: NeutralResourcesLanguage(PluginData.Language)]
+[assembly: AssemblyVersion(Data.Version)]
+[assembly: AssemblyFileVersion(Data.Version)]
+[assembly: NeutralResourcesLanguage(Data.Language)]

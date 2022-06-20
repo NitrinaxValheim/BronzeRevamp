@@ -1,10 +1,10 @@
-﻿namespace PluginSettings
+﻿namespace Plugin
 { // start tag
 
-    class PluginData
+    class Data
     { // class start
 
-        #region[PluginData]
+        #region[Data]
 
         /// <summary>
         ///     The namespace of the mod.
@@ -24,7 +24,7 @@
         /// <summary>
         ///     The current version of the mod.
         /// </summary>
-        public const string Version = "0.0.1.5";
+        public const string Version = "0.0.1.6";
 
         /// <summary>
         ///     The BepInEx plugin Mod GUID being used.
