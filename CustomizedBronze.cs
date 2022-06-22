@@ -32,7 +32,7 @@ namespace CustomizedBronze
 {
 
     // setup plugin data
-    [BepInPlugin(Data.Guid, Data.ModName, Data.Version)]
+    [BepInPlugin(Data.ModGuid, Data.ModName, Data.Version)]
 
     // check for running valheim process
     [BepInProcess("valheim.exe")]
@@ -41,7 +41,7 @@ namespace CustomizedBronze
     [BepInDependency(Jotunn.Main.ModGuid, BepInDependency.DependencyFlags.HardDependency)]
 
     // check compatibility level
-    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Patch)]
+    [NetworkCompatibility(CompatibilityLevel.ClientMustHaveMod, VersionStrictness.Patch)]
 
     internal class CustomizedBronze : BaseUnityPlugin
     {
@@ -144,56 +144,25 @@ namespace CustomizedBronze
 
                     // ##### plugin startup logic #####
 
-    #if (DEBUG)
+#if (DEBUG)
                     Jotunn.Logger.LogInfo("Loading start");
-    #endif
+#endif
+
                     // Event System
-
-                    // CreatureManager
-                    CreatureManager.OnCreaturesRegistered += OnCreaturesRegistered;
-                    CreatureManager.OnVanillaCreaturesAvailable += OnVanillaCreaturesAvailable;
-
-                    // GUIManager
-                    //GUIManager.OnPixelFixCreated - outdated
-                    GUIManager.OnCustomGUIAvailable += OnCustomGUIAvailable;
 
                     // ItemManager
                     ItemManager.OnItemsRegistered += OnItemsRegistered;
-                    ItemManager.OnItemsRegisteredFejd += OnItemsRegisteredFejd;
-                    //ItemManager.OnVanillaItemsAvailable - outdated
-
-                    // LocalizationManager
-                    LocalizationManager.OnLocalizationAdded += OnLocalizationAdded;
-
-                    // MinimapManager
-                    MinimapManager.OnVanillaMapAvailable += OnVanillaMapAvailable;
-                    MinimapManager.OnVanillaMapDataLoaded += OnVanillaMapDataLoaded;
-
-                    // PieceManager
-                    PieceManager.OnPiecesRegistered += OnPiecesRegistered;
-
-                    // PrefabManager
-                    PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
-                    PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
-
-                    // SynchronizationManager
-                    SynchronizationManager.OnAdminStatusChanged += OnAdminStatusChanged;
-                    //SynchronizationManager.OnConfigurationSynchronized += OnConfigurationSynchronized; - error
-
-                    // ZoneManager
-                    ZoneManager.OnVanillaLocationsAvailable += OnVanillaLocationsAvailable;
-
+   
                     // ##### info functions #####
 
-    #if (DEBUG)
+#if (DEBUG)
                     Jotunn.Logger.LogInfo("Loading done");
-    #endif
+#endif
 
                     // Game data
-    #if (DEBUG)
+#if (DEBUG)
                     Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is active.");
-    #endif
-
+#endif
 
                 }
                 else
@@ -338,13 +307,6 @@ namespace CustomizedBronze
 
             }
 
-/*            if (showDebugInfo == true)
-            {
-                Logger.LogInfo(
-                        "usedRequirementCopper = " + usedRequirementCopper +
-                        ", usedRequirementTin = " + usedRequirementTin +
-                        ", usedQuantityBronze = " + usedQuantityBronze);
-            }*/
 #if (DEBUG)
             Logger.LogInfo(
                         "usedRequirementCopper = " + usedRequirementCopper +
@@ -356,73 +318,6 @@ namespace CustomizedBronze
         #endregion
 
         #region[EventSystem]
-
-        // CreatureManager
-        #region[OnCreaturesRegistered]
-        private void OnCreaturesRegistered()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnCreaturesRegistered");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnCreaturesRegistered : {ex.Message}");
-            }
-            finally
-            {
-                CreatureManager.OnCreaturesRegistered -= OnCreaturesRegistered;
-            }
-
-        }
-        #endregion
-        #region[OnVanillaCreaturesAvailable]
-        private void OnVanillaCreaturesAvailable()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnVanillaCreaturesAvailable");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnVanillaCreaturesAvailable : {ex.Message}");
-            }
-            finally
-            {
-                CreatureManager.OnVanillaCreaturesAvailable -= OnVanillaCreaturesAvailable;
-            }
-
-        }
-        #endregion
-
-        // GUIManager
-        #region[OnCustomGUIAvailable]
-        private void OnCustomGUIAvailable()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnCustomGUIAvailable");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnCustomGUIAvailable : {ex.Message}");
-            }
-            finally
-            {
-                GUIManager.OnCustomGUIAvailable -= OnCustomGUIAvailable;
-            }
-
-        }
-        #endregion
 
         // ItemManager
         #region[OnItemsRegistered]
@@ -450,229 +345,6 @@ namespace CustomizedBronze
             finally
             {
                 PrefabManager.OnPrefabsRegistered -= OnItemsRegistered;
-            }
-
-        }
-        #endregion
-        #region[OnItemsRegisteredFejd]
-        private void OnItemsRegisteredFejd()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnItemsRegisteredFejd");
-#endif
-
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnItemsRegisteredFejd : {ex.Message}");
-            }
-            finally
-            {
-                ItemManager.OnItemsRegisteredFejd -= OnItemsRegisteredFejd;
-            }
-
-        }
-        #endregion
-
-        // LocalizationManager
-        #region[OnLocalizationAdded]
-        private void OnLocalizationAdded()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnLocalizationAdded");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnLocalizationAdded : {ex.Message}");
-            }
-            finally
-            {
-                LocalizationManager.OnLocalizationAdded -= OnLocalizationAdded;
-            }
-
-        }
-        #endregion
-
-        // MinimapManager
-        #region[OnVanillaMapAvailable]
-        private void OnVanillaMapAvailable()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnVanillaMapAvailable");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnVanillaMapAvailable : {ex.Message}");
-            }
-            finally
-            {
-                MinimapManager.OnVanillaMapAvailable -= OnVanillaMapAvailable;
-            }
-
-        }
-        #endregion
-        #region[OnVanillaMapDataLoaded]
-        private void OnVanillaMapDataLoaded()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnVanillaMapDataLoaded");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnVanillaMapDataLoaded : {ex.Message}");
-            }
-            finally
-            {
-                MinimapManager.OnVanillaMapDataLoaded -= OnVanillaMapDataLoaded;
-            }
-
-        }
-        #endregion
-
-        // PieceManager
-        #region[OnPiecesRegistered]
-        private void OnPiecesRegistered()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnPiecesRegistered");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnPiecesRegistered : {ex.Message}");
-            }
-            finally
-            {
-                PieceManager.OnPiecesRegistered -= OnPiecesRegistered;
-            }
-
-        }
-        #endregion
-
-        // PrefabManager
-        #region[OnPrefabsRegistered]
-        private void OnPrefabsRegistered()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnPrefabsRegistered");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnPrefabsRegistered : {ex.Message}");
-            }
-            finally
-            {
-                PrefabManager.OnPrefabsRegistered -= OnPrefabsRegistered;
-            }
-
-        }
-        #endregion
-        #region[OnVanillaPrefabsAvailable]
-        private void OnVanillaPrefabsAvailable()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnVanillaPrefabsAvailable");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnVanillaPrefabsAvailable : {ex.Message}");
-            }
-            finally
-            {
-                PrefabManager.OnVanillaPrefabsAvailable -= OnVanillaPrefabsAvailable;
-            }
-
-        }
-        #endregion
-
-        // SynchronizationManager
-        #region[OnAdminStatusChanged]
-        private void OnAdminStatusChanged()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnAdminStatusChanged");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnAdminStatusChanged : {ex.Message}");
-            }
-            finally
-            {
-                SynchronizationManager.OnAdminStatusChanged -= OnAdminStatusChanged;
-            }
-
-        }
-        #endregion
-        #region[OnConfigurationSynchronized]
-        private void OnConfigurationSynchronized()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnConfigurationSynchronized");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnConfigurationSynchronized : {ex.Message}");
-            }
-            finally
-            {
-                //SynchronizationManager.OnConfigurationSynchronized -= OnConfigurationSynchronized;
-            }
-
-        }
-        #endregion
-
-        // ZoneManager
-        #region[OnVanillaLocationsAvailable]
-        private void OnVanillaLocationsAvailable()
-        {
-
-            try
-            {
-#if (DEBUG)
-                Logger.LogInfo("OnVanillaLocationsAvailable");
-#endif
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Error OnVanillaLocationsAvailable : {ex.Message}");
-            }
-            finally
-            {
-                ZoneManager.OnVanillaLocationsAvailable -= OnVanillaLocationsAvailable;
             }
 
         }

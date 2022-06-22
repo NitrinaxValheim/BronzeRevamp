@@ -1,5 +1,13 @@
 # Changelog
 
+* Version 0.0.17
+    * changed Guid to ModGuid
+    * changed ModGuid from Company.Namespace to Company.ModName
+    * changed CompatibilityLevel from EveryoneMustHaveMod to ClientMustHaveMod
+    * adjusted Version string from pattern 0.0.0.0 to 0.0.0
+    * removed unused code parts
+    * removed unused event handling
+
 * Version 0.0.1.6
     * updated for Valheim 0.209.8 (Unity 2020.3.33f1)
     * updated for Jotunn 2.6.10
