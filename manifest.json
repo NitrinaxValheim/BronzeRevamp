@@ -1,10 +1,10 @@
 {
   "name": "CustomizedBronze",
-  "version_number": "0.0.17",
+  "version_number": "0.0.18",
   "website_url": "https://github.com/NitrinaxValheim/CustomizedBronze",
   "description": "Allows the user to customize the bronze recipe.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901",
-    "ValheimModding-Jotunn-2.6.10"
+    "ValheimModding-Jotunn-2.6.12"
   ]
 }

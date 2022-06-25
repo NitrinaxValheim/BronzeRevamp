@@ -24,7 +24,7 @@
         /// <summary>
         ///     The current version of the mod.
         /// </summary>
-        public const string Version = "0.0.17";
+        public const string Version = "0.0.18";
 
         /// <summary>
         ///     The BepInEx plugin Mod GUID being used.
@@ -78,60 +78,60 @@
         /// <summary>
         ///     Name of Config_General category.
         /// </summary>
-        public const string ConfigCategoryGeneral = "General";
+        public static string ConfigCategoryGeneral = "General";
 
         /// <summary>
         ///     Name of Enabled entry.
         /// </summary>
-        public const string ConfigEntryEnabled = "Enabled";
+        public static string ConfigEntryEnabled = "Enabled";
 
         /// <summary>
         ///     Description of Enabled.
         /// </summary>
-        public const string ConfigEntryEnabledDescription = "Enable this mod";
+        public static string ConfigEntryEnabledDescription = "Enable this mod";
 
         /// <summary>
         ///     The default state of the mod.
         /// </summary>
         //default state of this mod
-        public const bool ConfigEntryEnabledDefaultState = true;
+        public static bool ConfigEntryEnabledDefaultState = true;
 
         /// <summary>
         ///     Name of NexusID entry.
         /// </summary>
-        public const string ConfigEntryNexusID = "NexusID";
+        public static string ConfigEntryNexusID = "NexusID";
 
         /// <summary>
         ///     Description of NexusID.
         /// </summary>
-        public const string ConfigEntryNexusIDDescription = "Nexus mod ID for updates";
+        public static string ConfigEntryNexusIDDescription = "Nexus mod ID for updates";
 
         /// <summary>
         ///     The NexusID.
         /// </summary>
         //default state of this mod
-        public const int ConfigEntryNexusIDID = 1898;
+        public static int ConfigEntryNexusIDID = 1898;
 
         /// <summary>
         ///     Name of Plugin category.
         /// </summary>
-        public const string ConfigCategoryPlugin = "Plugin";
+        public static string ConfigCategoryPlugin = "Plugin";
 
         /// <summary>
         ///     Name of ShowChangesAtStartup entry.
         /// </summary>
-        public const string ConfigEntryShowChangesAtStartup = "ShowChangesAtStartup";
+        public static string ConfigEntryShowChangesAtStartup = "ShowChangesAtStartup";
 
         /// <summary>
         ///     The default ShowChangesAtStartup.
         /// </summary>
         //default state of this mod
-        public const bool ConfigEntryShowChangesAtStartupDefaultState = true;
+        public static bool ConfigEntryShowChangesAtStartupDefaultState = true;
 
         /// <summary>
         ///     Description of NexusID.
         /// </summary>
-        public const string ConfigEntryShowChangesAtStartupDescription = "If this option is set, the changes made by this mod are displayed in the console log.";
+        public static string ConfigEntryShowChangesAtStartupDescription = "If this option is set, the changes made by this mod are displayed in the console log.";
 
         #endregion
 

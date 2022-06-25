@@ -49,9 +49,9 @@ namespace Plugin
 
         // define needed Jotunn version
 #if (DEBUG)
-        public const string JotunnVersion = "2.6.10";
+        public const string JotunnVersion = "2.6.12";
 #else
-        public const string JotunnVersion = "2.6.10";
+        public const string JotunnVersion = "2.7.0";
 #endif
 
         #endregion

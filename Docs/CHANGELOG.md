@@ -1,5 +1,9 @@
 # Changelog
 
+* Version 0.0.18
+    * reworked configuration to adapt to Jotunn 2.7.0 changes and to use BepInExConfigurationManager
+    (please delete your current Nitrinax.CustomizedBronze.cfg to create a new config with the current strings)
+
 * Version 0.0.17
     * changed Guid to ModGuid
     * changed ModGuid from Company.Namespace to Company.ModName
