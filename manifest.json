@@ -5,6 +5,6 @@
   "description": "Allows the user to customize the bronze recipe.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901",
-    "ValheimModding-Jotunn-2.6.12"
+    "ValheimModding-Jotunn-2.7.0"
   ]
 }
