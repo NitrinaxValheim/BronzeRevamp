@@ -105,7 +105,7 @@ namespace CustomizedBronze
             "[If you select this preset, your custom settings will be ignored.]" + s_CRLF2 +
 
             "Custom = a custom alloy with the mixing ratio you set " + s_CRLF +
-            "[If you select this , your custom settings will be used.]" + s_CRLF;
+            "[If you select this, your custom settings will be used.]" + s_CRLF;
 
         private static string ConfigCategoryRecipeCustom = "Recipe Custom";
 
