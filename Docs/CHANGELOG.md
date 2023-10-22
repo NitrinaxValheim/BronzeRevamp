@@ -1,5 +1,20 @@
 # Changelog
 
+* Version 0.0.20
+
+    + updated for Valheim 0.217.25
+
+    + removed function GetGameVersionExtended in VersionOperations because the constants m_major, m_minor, m_patch have been removed from assembly_valheim
+    + changed GetCompatiblePlayerVersions to use m_oldestForwardCompatiblePlayerVersion instead of m_compatiblePlayerVersions because the constant has been removed from assembly_valheim
+    + changed GetCompatibleWorldVersion to use m_oldestForwardCompatibleWorldVersion instead of m_compatibleWorldVersions because the constant has been removed from assembly_valheim
+    + renamed category Recipe Bronze changed to Alloy Type    
+    + adjusted the names of the configuration variables
+      - renamed Recipe Custom Copper to Required Copper
+      - renamed Recipe Custom Tin to Required Tin
+      - renamed Recipe Custom Bronze to Produced Bronze
+    + fixed the "The given key was not present in the dictionary" error
+    + added a note to log out and log in for the changes to be applied
+
 * Version 0.0.19
     + fixing typo
 

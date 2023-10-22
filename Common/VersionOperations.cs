@@ -158,33 +158,6 @@ namespace Common
         }
         #endregion
 
-        #region[GetGameVersionExtended]
-        /// <summary>
-        /// show all fields of class Version as formatted output
-        /// </summary>
-        /// <returns>
-        /// returns output of m_major, m_minor, m_patch, m_playerVersion, m_compatiblePlayerVersions, m_worldGenVersion, m_worldVersion, m_compatibleWorldVersions from class Version
-        /// </returns>
-        public static string GetGameVersionExtended()
-        {
-
-            string CRLF = Environment.NewLine;
-
-            string myOutput =
-                "Version.m_major = " + Version.m_major + CRLF +
-                "Version.m_minor = " + Version.m_minor + CRLF +
-                "Version.m_patch = " + Version.m_patch + CRLF +
-                "Version.m_playerVersion = " + Version.m_playerVersion + CRLF +
-                "Version.m_compatiblePlayerVersions = (" + GetCompatiblePlayerVersions() + ")" + CRLF +
-                "Version.m_worldGenVersion = " + Version.m_worldGenVersion + CRLF +
-                "Version.m_worldVersion = " + Version.m_worldVersion + CRLF +
-                "Version.m_compatibleWorldVersions = (" + GetCompatibleWorldVersion() + ")";
-
-            return myOutput;
-
-        }
-        #endregion
-
         #region[GetCompatiblePlayerVersions]
         /// <summary>
         /// get all entries from m_compatiblePlayerVersions and join them to a string
@@ -195,7 +168,7 @@ namespace Common
         private static string GetCompatiblePlayerVersions()
         {
 
-            return string.Join(", ", Version.m_compatiblePlayerVersions);
+            return string.Join(", ", Version.m_oldestForwardCompatiblePlayerVersion);
 
         }
         #endregion
@@ -210,7 +183,7 @@ namespace Common
         private static string GetCompatibleWorldVersion()
         {
 
-            return string.Join(", ", Version.m_compatibleWorldVersions);
+            return string.Join(", ", Version.m_oldestForwardCompatibleWorldVersion);
 
         }
         #endregion

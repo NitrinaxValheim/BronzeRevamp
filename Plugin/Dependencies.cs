@@ -8,34 +8,18 @@ namespace Plugin
 
         // define needed Unity name
         public const string EngineName = "Unity";
-
         // define needed Unity version
-        // define needed Unity version
-#if (DEBUG)
-        public const string EngineVersion = "2020.3.33f1";
-#else
-        public const string EngineVersion = "2020.3.33f1";
-#endif
+        public const string EngineVersion = "2020.3.45f1";
 
         // define needed Valheim name
         public const string GameName = "Valheim";
-
         // define needed Valheim version
-#if (DEBUG)
-        public const string GameVersion = "0.209.8";
-#else
-        public const string GameVersion = "0.209.8";
-#endif
+        public const string GameVersion = "0.217.25";
 
         // define needed BepInEx name
         public const string BepInExName = "BepInExPack Valheim";
-
         // define needed BepInEx version
-#if (DEBUG)
-        public const string BepInExVersion = "5.4.19.0";
-#else
-        public const string BepInExVersion = "5.4.19.0";
-#endif
+        public const string BepInExVersion = "5.4.22.0";
 
         #endregion
 
@@ -46,13 +30,8 @@ namespace Plugin
 
         // define needed Jotunn name
         public const string JotunnName = "Jotunn, the Valheim Library";
-
         // define needed Jotunn version
-#if (DEBUG)
-        public const string JotunnVersion = "2.6.12";
-#else
-        public const string JotunnVersion = "2.7.0";
-#endif
+        public const string JotunnVersion = "2.14.5";
 
         #endregion
 

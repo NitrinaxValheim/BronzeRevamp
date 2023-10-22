@@ -48,7 +48,7 @@ rem echo %plugin_file_warning%
 ADD_DOCS_BEFORE_PACK.txt
 
 REM set icon file name
-set plugin_file_icon=E:\Developer\Projects\Games\Valheim\DistSource\%project_name%\thunderstore\icon.png
+set plugin_file_icon=D:\Developer\Projects\Games\Valheim\DistSource\%project_name%\thunderstore\icon.png
 rem echo %plugin_file_icon%
 
 REM set source path of compiled mod .dll
@@ -56,7 +56,7 @@ set source_path=%project_dir%bin\%config_name%\net472
 rem echo %source_path%
 
 REM set target bepinex plugin path
-set bepinex_plugin_path=D:\Games\Steam\steamapps\common\Valheim\BepInEx\plugins
+set bepinex_plugin_path=E:\Steam\steamapps\common\Valheim\BepInEx\plugins
 rem echo %bepinex_plugin_path%
 
 REM set target plugin dir path in bepinex plugin folder

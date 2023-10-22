@@ -29,6 +29,7 @@ using Common;
 using Plugin;
 using System.ComponentModel;
 using System.Text;
+using System.Numerics;
 
 namespace CustomizedBronze
 {
@@ -87,10 +88,12 @@ namespace CustomizedBronze
         // config strings
         private static string ConfigCategoryRecipeAlloy = "Recipe Alloy";
 
-        private static string ConfigEntryRecipeAlloyBronze = "Recipe Bronze";
-        private static string ConfigEntryRecipeAlloyBronzeDescription =
+        private static string ConfigEntryAttention = "Please note: After changing settings, you must log out and log in for the changes to be applied.";
+
+        private static string ConfigEntryRecipeAlloy = "Alloy Type";
+        private static string ConfigEntryRecipeAlloyDescription =
             "Alloy composition:" + s_CRLF +
-            "(If you change this, you will need to log in again for the changes to take effect.)" + s_CRLF2 +
+            "(" + ConfigEntryAttention + ")" + s_CRLF2 +
 
             "Default = the standard alloy from Valheim" + s_CRLF +
             "(2 Copper + 1 Tin = 1 Bronze)" + s_CRLF +
@@ -109,11 +112,13 @@ namespace CustomizedBronze
 
         private static string ConfigCategoryRecipeCustom = "Recipe Custom";
 
-        private static string ConfigEntryRecipeCustomCopper = "Recipe Custom Copper";
+        private static string ConfigEntryRecipeCustomCopper = "Required Copper";
         private static string ConfigEntryRecipeCustomCopperDescription = "Sets amount of needed of Copper.";
-        private static string ConfigEntryRecipeCustomTin = "Recipe Custom Tin";
+
+        private static string ConfigEntryRecipeCustomTin = "Required Tin";
         private static string ConfigEntryRecipeCustomTinDescription = "Sets amount of needed of Tin.";
-        private static string ConfigEntryRecipeCustomBronze = "Recipe Custom Bronze";
+
+        private static string ConfigEntryRecipeCustomBronze = "Produced Bronze";
         private static string ConfigEntryRecipeCustomBronzeDescription = "Sets the amount of bronze produced.";
 
         // Configuration values
@@ -127,14 +132,13 @@ namespace CustomizedBronze
         public static ConfigEntry<int> configRecipeNeededTin;
         public static ConfigEntry<int> configRecipeProducedBronze;
 
-        private static int usedRequirementCopper = 0;
-        private static int usedRequirementTin = 0;
-        private static int usedQuantityBronze = 0;
+        private int usedRequirementCopper = 0;
+        private int usedRequirementTin = 0;
+        private int usedQuantityBronze = 0;
 
         #region[Awake]
         private void Awake()
         {
-
 
             if (DependencyOperations.CheckForDependencyErrors(PluginInfo.PLUGIN_GUID) == false)
             {
@@ -198,7 +202,6 @@ namespace CustomizedBronze
 
             Config.SaveOnConfigSet = true;
 
-            // Add client config which can be edited in every local instance independently
             configModEnabled = Config.Bind(
                 Data.ConfigCategoryGeneral,
                 Data.ConfigEntryEnabled,
@@ -241,14 +244,15 @@ namespace CustomizedBronze
 
             configBronzeAlloy = Config.Bind(
                 ConfigCategoryRecipeAlloy,
-                ConfigEntryRecipeAlloyBronze,
+                ConfigEntryRecipeAlloy,
                 BronzeAlloy.Default,
-                new ConfigDescription(ConfigEntryRecipeAlloyBronzeDescription,
+                new ConfigDescription(ConfigEntryRecipeAlloyDescription,
                     null,
                     new ConfigurationManagerAttributes
                     {
                         DefaultValue = BronzeAlloy.Default,
-                        Order = 0
+                        Order = 1,
+                        DispName = ConfigEntryRecipeAlloy + s_CRLF2 + ConfigEntryAttention,
                     }
                 )
             );
@@ -318,11 +322,15 @@ namespace CustomizedBronze
         private void ReadConfigValues()
         {
 
+#if (DEBUG)
+            Logger.LogInfo("ReadConfigValues");
+#endif
+
             // get state of showChangesAtStartup
             bool showChangesAtStartup = (bool)Config[Data.ConfigCategoryPlugin, Data.ConfigEntryShowChangesAtStartup].BoxedValue;
 
             // get BronzeAlloy config option
-            BronzeAlloy bronzePreset = (BronzeAlloy)Config[ConfigCategoryRecipeAlloy, ConfigEntryRecipeAlloyBronze].BoxedValue;
+            BronzeAlloy bronzePreset = (BronzeAlloy)Config[ConfigCategoryRecipeAlloy, ConfigEntryRecipeAlloy].BoxedValue;
 
             // check enum config option
             switch (bronzePreset)
@@ -359,9 +367,9 @@ namespace CustomizedBronze
 
                     if (showChangesAtStartup == true) { Logger.LogInfo("Custom option selected"); }
 
-                    usedRequirementCopper = (int)Config[ConfigCategoryRecipeAlloy, ConfigEntryRecipeCustomCopper].BoxedValue;
-                    usedRequirementTin = (int)Config[ConfigCategoryRecipeAlloy, ConfigEntryRecipeCustomTin].BoxedValue;
-                    usedQuantityBronze = (int)Config[ConfigCategoryRecipeAlloy, ConfigEntryRecipeCustomBronze].BoxedValue;
+                    usedRequirementCopper = (int)Config[ConfigCategoryRecipeCustom, ConfigEntryRecipeCustomCopper].BoxedValue;
+                    usedRequirementTin = (int)Config[ConfigCategoryRecipeCustom, ConfigEntryRecipeCustomTin].BoxedValue;
+                    usedQuantityBronze = (int)Config[ConfigCategoryRecipeCustom, ConfigEntryRecipeCustomBronze].BoxedValue;
 
                     break;
 
@@ -381,6 +389,7 @@ namespace CustomizedBronze
 #endif
 
         }
+
         #endregion
 
         #region[EventSystem]
@@ -407,6 +416,15 @@ namespace CustomizedBronze
             catch (Exception ex)
             {
                 Logger.LogError($"Error OnItemsRegistered : {ex.Message}");
+#if (DEBUG)
+                Logger.LogError($"Data : {ex.Data}");
+                Logger.LogError($"HelpLink : {ex.HelpLink}");
+                Logger.LogError($"HResult : {ex.HResult}");
+                Logger.LogError($"InnerException : {ex.InnerException}");
+                Logger.LogError($"Source : {ex.Source}");
+                Logger.LogError($"StackTrace : {ex.StackTrace}");
+                Logger.LogError($"TargetSite : {ex.TargetSite}");
+#endif
             }
             finally
             {
@@ -421,6 +439,10 @@ namespace CustomizedBronze
         #region[ChangeBronzeRecipe]
         private void ChangeBronzeRecipe()
         {
+
+#if (DEBUG)
+            Logger.LogInfo("ChangeBronzeRecipe");
+#endif
 
             // init vars
             int requirementCopper = 0;
@@ -441,9 +463,6 @@ namespace CustomizedBronze
                     requirementTin = usedRequirementTin;
                     quantityBronze = usedQuantityBronze;
 
-                    // set Quantity of produced bronze
-                    instanceMRecipe.m_amount = quantityBronze;
-
                     // requirements
                     instanceMRecipe.m_resources = new Piece.Requirement[]
                     {
@@ -455,6 +474,9 @@ namespace CustomizedBronze
                         new Piece.Requirement() { m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Tin"), m_amount = requirementTin }
 
                     };
+
+                    // set Quantity of produced bronze
+                    instanceMRecipe.m_amount = quantityBronze;
 
                 }
 
@@ -466,9 +488,6 @@ namespace CustomizedBronze
                     requirementTin = usedRequirementTin * 5;
                     quantityBronze = usedQuantityBronze * 5;
 
-                    // set Quantity of produced bronze
-                    instanceMRecipe.m_amount = quantityBronze;
-
                     // requirements
                     instanceMRecipe.m_resources = new Piece.Requirement[]
                     {
@@ -481,12 +500,15 @@ namespace CustomizedBronze
 
                     };
 
+                    // set Quantity of produced bronze
+                    instanceMRecipe.m_amount = quantityBronze;
+
                 }
 
                 if (showChangesAtStartup == true)
                 {
 
-                    Jotunn.Logger.LogInfo($"changes " + instanceMRecipe.name +
+                    Jotunn.Logger.LogInfo($"changed " + instanceMRecipe.name +
                         ", set Copper requirement to " + requirementCopper +
                         ", set Tin requirement to " + requirementTin +
                         ", set created quantity of Bronze to " + quantityBronze
